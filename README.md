@@ -26,7 +26,16 @@ Niki Tavakoli<sup>1+</sup>, Emma J. Fong<sup>2+</sup>, Abigail Coleman<sup>2</su
 <sup>\*</sup>Co-correspondence: sfinley@usc.edu (S.D.F.), smumenthaler@eit.org (S.M.)  
 
 
-
+### Prerequisites 
+Before you begin, ensure you have met the following requirements. 
+For running flux balance analysis and performing enzyme knockdowns:
+* **MATLAB**: You need to have MATLAB installed on your machine. For installation details, see the [official MATLAB website](https://www.mathworks.com/products/matlab.html).
+* **COBRA Toolbox**: You also need to have the COBRA Toolbox installed in MATLAB. Installation instructions can be found on the [COBRA Toolbox GitHub page](https://opencobra.github.io/cobratoolbox/stable/installation.html).
+For utilizing representation learning:
+* **Python**: You need to have Python installed on your machine. You can download it from the [official Python website](https://www.python.org/downloads/).
+* **TensorFlow**: After installing Python, you need to install TensorFlow. You can install TensorFlow via pip with the following command:
+  ```bash
+  pip install tensorflow
 
 
 ### Files
