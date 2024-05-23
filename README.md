@@ -16,6 +16,7 @@
 ## Authors
 Niki Tavakoli<sup>1+</sup>, Emma J. Fong<sup>2+</sup>, Abigail Coleman<sup>2</sup>, Yu-Kai Huang<sup>2</sup>, Mathias Bigger<sup>2,3</sup>, Michael E. Doche<sup>2</sup>, Seungil Kim<sup>2</sup>, Heinz-Josef Lenz<sup>6</sup>, Nicholas A. Graham<sup>3</sup>, Paul Macklin<sup>4</sup>, Stacey D. Finley<sup>1,3,5,*</sup>, Shannon M. Mumenthaler<sup>1,2,6,\*</sup>   
 
+<p style="font-size: 12px;">
 <sup>1</sup>Alfred E. Mann Department of Biomedical Engineering, University of Southern California, Los Angeles, CA, 90089, USA  
 <sup>2</sup>Ellison Institute of Technology, Los Angeles, CA, 90064, USA   
 <sup>3</sup>Mork Family Department of Chemical Engineering and Materials Science, University of Southern California, Los Angeles, CA, 90089, USA   
@@ -23,7 +24,7 @@ Niki Tavakoli<sup>1+</sup>, Emma J. Fong<sup>2+</sup>, Abigail Coleman<sup>2</su
 <sup>5</sup>Department of Quantitative and Computational Biology, University of Southern California, Los Angeles, CA, 90089, USA  
 <sup>6</sup>Division of Medical Oncology, Norris Comprehensive Cancer Center, University of Southern California, Los Angeles, CA, 90033, USA  
 <sup>+</sup>Denotes co-first authors  
-<sup>\*</sup>Co-correspondence: sfinley@usc.edu (S.D.F.), smumenthaler@eit.org (S.M.)  
+<sup>\*</sup>Co-correspondence: sfinley@usc.edu (S.D.F.), smumenthaler@eit.org (S.M.)  </p>
 
 
 ### Prerequisites
