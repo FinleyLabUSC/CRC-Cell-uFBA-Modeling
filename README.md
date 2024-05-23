@@ -12,5 +12,6 @@ Cancer-associated fibroblasts (CAFs) play a key role in metabolic reprogramming 
 
 ### Files
 - ` 📁 enzyme_knockdowns ` : contains all of the code for performing partial enzyme knockdowns for all cell conditions
-  - ` 📁 baselineCode ` : Contains the code developed by [Wang et al. (2022)](https://www.sciencedirect.com/science/article/pii/S1096717621001774?via%3Dihub), which employs upFBA to predict the network's flux distributions based on the constraints outlined in their study.
+  - ` 📁 baselineCode ` : contains the code developed by [Wang et al. (2022)](https://www.sciencedirect.com/science/article/pii/S1096717621001774?via%3Dihub), which employs upFBA to predict the network's flux distributions based on the constraints outlined in their study.
+  - ` 📁 baselineCode ` : contains the outputted data from `run_upFBA_model.m`. 
 
