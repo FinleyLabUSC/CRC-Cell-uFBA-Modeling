@@ -12,4 +12,5 @@ Cancer-associated fibroblasts (CAFs) play a key role in metabolic reprogramming 
 
 ### Files
 - ` 📁 enzyme_knockdowns ` : contains the code for performing partial enzyme knockdowns for all cell conditions
+  - ` 📁 enzyme_knockdowns `
 
