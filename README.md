@@ -26,7 +26,7 @@ Niki Tavakoli<sup>1+</sup>, Emma J. Fong<sup>2+</sup>, Abigail Coleman<sup>2</su
 <sup>\*</sup>Co-correspondence: sfinley@usc.edu (S.D.F.), smumenthaler@eit.org (S.M.)  
 
 
-### Prerequisites 
+### Prerequisites
 Before you begin, ensure you have met the following requirements. 
 * **MATLAB**: You need to have MATLAB installed on your machine. For installation details, see the [official MATLAB website](https://www.mathworks.com/products/matlab.html).
 * **COBRA Toolbox**: You also need to have the COBRA Toolbox installed in MATLAB. Installation instructions can be found on the [COBRA Toolbox GitHub page](https://opencobra.github.io/cobratoolbox/stable/installation.html).  
