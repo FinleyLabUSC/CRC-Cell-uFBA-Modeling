@@ -17,15 +17,16 @@
 - [Acknowledgments](#acknowledgments)
 
 ### Files
+
+#### Enzyme Knockdowns 
 - ` 📁 enzyme_knockdowns ` : contains all of the code for performing partial enzyme knockdowns for all cell conditions
   - ` 📁 baselineCode ` : contains the code developed by [Wang et al. (2022)](https://www.sciencedirect.com/science/article/pii/S1096717621001774?via%3Dihub), which employs upFBA to predict the network's flux distributions based on the constraints outlined in their study.
   - ` 📁 baselineCode ` : contains the outputted data from `run_upFBA_model.m` in `baselineCode`. 
 
 - `📜 gene_knockdowns.m` : a script that sets up the partial enzyme knockdowns for all cell conditions.
 - `📜 main_gene_knockdowns.m` : a script that executes `gene_knockdowns.m`.
-
 ---
-
+#### Representation Learning 
 - ` 📁 representation_learning ` : contains all of the code for performing representation learning on the the data from `📜 gene_knockdowns.m`.
   - `📜 trainNN.py ` : a script that loads in the data, defines the neural network architecture, specifies the loss function and optimizer, and runs the training loop where the model learns from the training data.
   - `📜 genNN.py ` : a script that generates outputs using the trained neural network.
