@@ -27,4 +27,6 @@
 ---
 
 - ` 📁 representation_learning ` : contains all of the code for performing representation learning on the the data from `📜 gene_knockdowns.m`.
-
+  - `📜 trainNN.py ` : a script that loads in the data, defines the neural network architecture, specifies the loss function and optimizer, and runs the training loop where the model learns from the training data.
+  - `📜 genNN.py ` : a script that generates outputs using the trained neural network.
+  - `📜 data_generator.py ` : a script designed to generate / preprocess data.
