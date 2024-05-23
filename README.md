@@ -1,21 +1,19 @@
 # Merging Metabolic Modeling and Imaging for Screening Therapeutic Targets in Colorectal Cancer
 
 ## Introduction
-Provide a brief description of the academic journal project, its purpose, and the research question it addresses. Explain the significance of the project in the broader field of study.
+Cancer-associated fibroblasts (CAFs) play a key role in metabolic reprogramming and are well-established contributors to drug resistance in colorectal cancer (CRC). To exploit this metabolic crosstalk, we integrated a systems biology approach that identified key metabolic targets in a data-driven method and validated them experimentally. This process involved high-throughput computational screening to investigate the effects of enzyme perturbations predicted by a computational model of CRC metabolism to understand system-wide effects efficiently. Our results highlighted hexokinase (HK) as one of the crucial targets, which subsequently became our focus for experimental validation using patient-derived tumor organoids (PDTOs). Through metabolic imaging and viability assays, we found that PDTOs cultured in CAF conditioned media exhibited increased sensitivity to HK inhibition. Our approach emphasizes the critical role of integrating computational and experimental techniques in exploring and exploiting CRC-CAF crosstalk.
 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
-- [Data](#data)
+- [File](#files)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
 
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-### Prerequisites
+### Files
 What things you need to install the software and how to install them.
 ```bash
 # Example of software requirements and installation steps:
 # You might need to install Python, Node.js, or any other software according to your project needs.
 
+Continue
