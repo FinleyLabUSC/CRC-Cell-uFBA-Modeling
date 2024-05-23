@@ -36,8 +36,7 @@ For utilizing representation learning:
 * **TensorFlow**: After installing Python, you need to install TensorFlow. You can install TensorFlow via pip with the following command:
   ```bash
   pip install tensorflow
-
-
+  
 ### Files
 
 #### Enzyme Knockdowns 
