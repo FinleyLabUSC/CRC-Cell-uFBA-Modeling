@@ -11,9 +11,4 @@ Cancer-associated fibroblasts (CAFs) play a key role in metabolic reprogramming 
 - [Acknowledgments](#acknowledgments)
 
 ### Files
-What things you need to install the software and how to install them.
-```bash
-# Example of software requirements and installation steps:
-# You might need to install Python, Node.js, or any other software according to your project needs.
-
-Continue
+- `make list-projects` :
