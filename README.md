@@ -18,5 +18,7 @@ Cancer-associated fibroblasts (CAFs) play a key role in metabolic reprogramming 
 - `📜 gene_knockdowns.m` : a script that sets up the partial enzyme knockdowns for all cell conditions.
 - `📜 main_gene_knockdowns.m` : a script that executes `gene_knockdowns.m`.
 
+---
+
 - ` 📁 representation_learning ` : contains all of the code for performing representation learning on the the data from `📜 gene_knockdowns.m`.
 
