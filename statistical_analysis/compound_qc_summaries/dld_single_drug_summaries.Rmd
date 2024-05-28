@@ -1,0 +1,155 @@
+---
+title: "Metabolic Crosstalk Single Drug Dose Response"
+author: "Abby Coleman"
+date: "`r Sys.Date()`"
+geometry: "left = 1cm, right = 1cm, top = 1cm, bottom = 2cm"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(here)
+library(renv)
+library(knitr)
+library(tidyverse)
+library(rmarkdown)
+library(emdbook)
+library(viridis)
+library(gt)
+library(patchwork)
+library(webshot2)
+library(png)
+library(plater)
+library(ggbeeswarm)
+library(janitor)
+library(drc)
+
+source(here('scripts', 'functions.R'))
+
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen=999)
+```
+
+
+```{r read_in_data, echo = FALSE, warning = FALSE, message = FALSE}
+drms <- readRDS(file = here("data_output", "all_drms.rds"))
+all_data <- readRDS(file = here("data_output", "all_raw_data.rds"))
+compounds <- unique(drms$compound_name)
+```
+
+# Experiment Summaries by Compound
+
+
+```{r print, echo = FALSE, warning = FALSE, message = FALSE, results = "asis", fig.height = 11, fig.width = 7, fig.align = "center", out.width = "75%", out.height = "75%"}
+
+for (i in compounds) {
+  
+  compound_drms <- drms %>%
+    filter(compound_name == i)
+  
+  for (j in unique(compound_drms$cell_line)) {
+    compound_cell_drms <- compound_drms %>%
+      filter(cell_line == j)
+    
+    compound_cell_data <- all_data %>%
+      filter(compound_name == i & cell_line == j)
+    
+    if (i == "CTX") {
+      compound_cell_drms <- compound_cell_drms %>%
+        filter(drug_unit == "ug/mL")
+      compound_cell_data <- compound_cell_data %>%
+        filter(drug_unit == "ug/mL")
+    }
+    
+    compound_summary <- get_compound_summary(compound_cell_drms, compound_cell_data, all_data, compound = i, cell = j)
+  
+      cat("\n")
+      cat(paste("##", i, j))
+      cat("\n")
+      cat("### All Raw Data")
+      cat("\n")
+      
+      layout <- ((compound_summary$raw_plot + theme(plot.margin = unit(c(0, 0, 0, 0), "pt"))) / 
+                   (wrap_elements(compound_summary$all_table) + theme(plot.margin = unit(c(0, 0, 0, 0), "pt")))) + 
+        plot_layout(heights = c(1, 1))
+        
+      print(layout)
+      
+      # cat("\n")
+      cat("\n\n\\pagebreak\n")
+      # cat("\n")
+  
+      if (!is.data.frame(compound_summary$qc_data_avgs)) {
+        cat("\n")
+        cat("### Normalized, Quality-Checked Data")
+        cat("\n")
+        layout <- ((compound_summary$norm_plot_nocis + theme(plot.margin = unit(c(0, 0, 0, 0), "pt")))  /
+                     (wrap_elements(compound_summary$qc_data_avgs) + theme(plot.margin = unit(c(0, 0, 0, 0), "pt")))) + 
+                      plot_layout(heights = c(1, 1))
+                   
+        print(layout)
+      
+        # cat("\n")
+        cat("\n\n\\pagebreak\n")
+        # cat("\n")
+      }
+      
+      if (!is.data.frame(compound_summary$non_qc_table)) {
+        cat("\n")
+        cat("### Data that Didn't Pass QC Check")
+        #   paste("##", compound, cell, "Luciferase"))
+        cat("\n")
+      
+        layout <- ((compound_summary$non_qc_plot + theme(plot.margin = unit(c(0, 0, 0, 0), "pt")))  /
+                     (wrap_elements(compound_summary$non_qc_table) + theme(plot.margin = unit(c(0, 0, 0, 0), "pt")))) +
+          plot_layout(heights = c(1, 1))
+        print(layout)
+      
+        # cat("\n")
+        cat("\n\n\\pagebreak\n")
+        # cat("\n")
+      }
+        
+      if (!is.data.frame(compound_summary$all_data_avgs)) {
+        cat("\n")
+        cat("### All Normalized Data")
+        cat("\n")
+          
+        layout <- ((compound_summary$all_norm_plot_nocis + theme(plot.margin = unit(c(0, 0, 0, 0), "pt"))) /
+                     (wrap_elements(compound_summary$all_table) + theme(plot.margin = unit(c(0, 0, 0, 0), "pt")))) +
+
+          plot_layout(heights = c(1, 1))
+        print(layout)
+      
+        # cat("\n")
+        cat("\n\n\\pagebreak\n")
+        # cat("\n")
+      }
+  }
+}
+
+```
+
+# Composite Models
+
+```{r echo = FALSE, message = FALSE, error = FALSE, results = "asis", fig.height = 7, fig.width = 7, fig.align = "center", out.width = "75%", out.height = "75%"}
+passed_qc_drms <- drms %>%
+  filter(flag == "passed QC") %>%
+  unnest(data) %>%
+  group_by(compound_name, cell_line, drug_unit) %>%
+  nest() %>%
+  mutate(title = paste(compound_name, cell_line))
+comp_plots <- apply(passed_qc_drms, 1, comp_plotter)
+names(comp_plots) <- passed_qc_drms$title
+
+for (i in names(comp_plots)) {
+  cat("\n")
+  cat(paste("###", i))
+  print(comp_plots[i])
+  cat("\n\n\\pagebreak\n")
+
+}
+```
+
+
+
+
