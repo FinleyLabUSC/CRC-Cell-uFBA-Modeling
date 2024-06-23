@@ -6,16 +6,21 @@ function matrix_of_fluxes = knockdowns(j,cc)
 % eg. if numpoints=4, 0% 33% 66% 100%.
 %I set this to 2, so it calculates 0% knockdown and 100% knockdown. 
 
+%disp(['Combination of ', j, 'and', cc]);
+
 number_of_increments = 2;
 
 matrix_of_fluxes = cell(1,number_of_increments);
 biomass_fluxes = cell(1,number_of_increments);
 knockdown_percents = zeros(1,number_of_increments); %Matrix that saves percentages of enzyme knockouts
 
+
+disp(['Simulating combination knockdown of reaction ' num2str(j) 'and reaction ' num2str(cc)]);
+
 for y = 1:number_of_increments
     percent = round(((y*(1/(number_of_increments-1))) - (1/(number_of_increments-1))),1); %percent in decimal form of enzyme knockout, saved in matrix
     knockdown_percents(1,y) = percent;
-    %disp(['Inhibition of ', num2str(percent * 100), '%']);
+    disp(['Inhibition of ', num2str(percent * 100), '%']);
 
 
 % Load in the baseline data, calculated from original flux balance analysis.     
@@ -68,7 +73,6 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
   
         %4 if statements that give fractional enzyme knockouts depending on
         %condition being used
-
         if i==1
             if percent == 1  %  Check if inhibition is 100%; if this is the case, fully shut down both the bounds to knock the enzyme out 
                     tmp_model = changeRxnBounds(model, {model.rxns{j}, model.rxns{cc}}, [0, 0], {'b', 'b'});
@@ -211,14 +215,21 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
                 mets_to_exclude(contains(tmp_model.mets, "_greater")) = true;
                 mets_to_exclude(contains(tmp_model.mets, "_lower")) = true;
                 relaxOption.excludedMetabolites = mets_to_exclude;
-                solution = relaxedFBA(tmp_model,relaxOption);
-                [stat,v,r,p,q] = deal(solution.stat, solution.v, solution.r, solution.p, solution.q);
+                try 
+                    solution = relaxedFBA(tmp_model,relaxOption);
+                    [stat,v,r,p,q] = deal(solution.stat, solution.v, solution.r, solution.p, solution.q);
+                catch ME
+                    disp('No feasible solution found.:');
+                    disp(ME.message);
+                    stat = 0;
+                end
                 if stat == 0
                     v = zeros(size(tmp_model.rxns));
                     r = zeros(size(tmp_model.mets));
                     p = zeros(size(tmp_model.rxns));
                     q = zeros(size(tmp_model.rxns));
-                    knockdown_biomass_mat{i, k, j} = NaN;
+                    %knockdown_biomass_mat{i, k, j} = NaN;
+                    knockdown_biomass_mat{i, k, j} = 0;
                 else
                     b_nonzero_indices = find(r ~= 0);
                     b_nonzero_values = r(b_nonzero_indices);
@@ -240,7 +251,8 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
                        r = zeros(size(tmp_model.mets));
                        p = zeros(size(tmp_model.rxns));
                        q = zeros(size(tmp_model.rxns));
-                       knockdown_biomass_mat{i, k, j} = NaN;
+                       %knockdown_biomass_mat{i, k, j} = NaN;
+                       knockdown_biomass_mat{i, k, j} = 0;
                     end
                 end
             else
@@ -256,6 +268,7 @@ end
 
 %Save Biomass production and put into matrix
 A=knockdown_biomass_mat(:,:,j);
+assignin('base', 'A', A);
 B=zeros(4,100);
 for l=1:4
     for m=1:100
@@ -263,6 +276,7 @@ for l=1:4
             B(l,m)=0;
         else
             B(l,m)=A{l,m}(73);
+            assignin('base', 'B', B);
         end
     end
 end
@@ -277,6 +291,7 @@ for l=1:4
                 C(l,m,n)=0;
             else
                 C(l,m,n)=A{l,m}(n);
+                assignin('base', 'C', C);
             end
         end
     end
