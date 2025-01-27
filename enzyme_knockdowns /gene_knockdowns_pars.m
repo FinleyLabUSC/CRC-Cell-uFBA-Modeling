@@ -1,4 +1,4 @@
-function matrix_of_fluxes = gene_knockdowns(j)
+function matrix_of_fluxes = gene_knockdowns_new(j)
 % gene_knockdowns.m runs the reaction for a given j (knockdown) and
 % returns Met_fluxes_percents
 % input(s): j(int) - knockdown reaction number
@@ -68,77 +68,55 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
         if i==1
             if mean(WT_CRC(:,j)) > 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(WT_CRC(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(WT_CRC(:,j)) < 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(WT_CRC(:,j)))*(1-percent), 'l');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(WT_CRC(:,j)) == 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(WT_CRC(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             end
         end 
         
         if i==2
             if mean(KRAS_CCM(:,j)) > 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(KRAS_CCM(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(KRAS_CCM(:,j)) < 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(KRAS_CCM(:,j)))*(1-percent), 'l');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(KRAS_CCM(:,j)) == 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(KRAS_CCM(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
-
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             end
         end
         
         if i==3
             if mean(WT_CCM(:,j)) > 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(WT_CCM(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(WT_CCM(:,j)) < 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(WT_CCM(:,j)))*(1-percent), 'l');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(WT_CCM(:,j)) == 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(WT_CCM(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             end
         end
         
         if i==4
             if mean(KRAS_CRC(:,j)) > 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(KRAS_CRC(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(KRAS_CRC(:,j)) < 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(KRAS_CRC(:,j)))*(1-percent), 'l');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             elseif  mean(KRAS_CRC(:,j)) == 0
                     tmp_model = changeRxnBounds(model, model.rxns{j},(mean(KRAS_CRC(:,j)))*(1-percent), 'u');
-                    tmp_sol = optimizeCbModel(tmp_model, 'max');
+                    [tmp_sol, ~]= minimizeModelFlux(tmp_model, 'min', 'one');
             end
         end
         
-
-%         if i==1
-%             disp(model.lb(j))
-%             disp(model.ub(j))
-%             tmp_sol = optimizeCbModel(model, 'max');
-%         end 
-%         if i==2
-%             disp(model.lb(j))
-%             disp(model.ub(j))
-%             tmp_sol = optimizeCbModel(model, 'max');
-%         end
-%         if i==3
-%             disp(model.lb(j))
-%             disp(model.ub(j))
-%             tmp_sol = optimizeCbModel(model, 'max');
-%         end
-%         if i==4
-%             disp(model.lb(j))
-%             disp(model.ub(j))
-%             tmp_sol = optimizeCbModel(model, 'max');
-%         end
            
             if ~tmp_sol.stat
                 relaxOption.internalRelax = 0;
@@ -156,7 +134,7 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
                     r = zeros(size(tmp_model.mets));
                     p = zeros(size(tmp_model.rxns));
                     q = zeros(size(tmp_model.rxns));
-                    knockdown_biomass_mat{i, k, j} = NaN;
+                    knockdown_biomass_mat{i, k, j} = 0;
                 else
                     b_nonzero_indices = find(r ~= 0);
                     b_nonzero_values = r(b_nonzero_indices);
@@ -164,7 +142,7 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
                     for m = 1:numel(b_nonzero_indices)
                         tmp_model.b(b_nonzero_indices(m)) = tmp_model.b(b_nonzero_indices(m)) - b_nonzero_values(m);
                     end    
-                    solutionDel = optimizeCbModel(tmp_model, 'max');
+                    solutionDel = minimizeModelFlux(tmp_model, 'min', 'one');
                     stat = solutionDel.stat;
                     if stat == 1
                        v = solutionDel.x;                      
@@ -178,7 +156,7 @@ for i=1:4    % i=1, WT(CRC-only media); i=2, KRAS(CRC-CAF media); i=3, WT(CRC-CA
                        r = zeros(size(tmp_model.mets));
                        p = zeros(size(tmp_model.rxns));
                        q = zeros(size(tmp_model.rxns));
-                       knockdown_biomass_mat{i, k, j} = NaN;
+                       knockdown_biomass_mat{i, k, j} = 0;
                     end
                 end
             else
